@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_township_contact_form" model="ir.ui.view">
+        <field name="name">view.township.contact</field>
+        <field name="model">township.contact</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                </group>
+                <group>
+                    <field name="township_code"/>
+                    <field name="city"/>
+                    <field name="country"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="township_contact_view_tree" model="ir.ui.view">
+        <field name="name">township.contact.view.tree</field>
+        <field name="model">township.contact</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="township_code"/>
+                <field name="city"/>
+                <field name="country"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Calendar View -->
+    <record id="township_contact_view_calendar" model="ir.ui.view">
+        <field name="name">township.contact.view.calendar</field>
+        <field name="model">township.contact</field>
+        <field name="arch" type="xml">
+            <calendar string="Township Contacts" date_start="create_date">
+                <field name="name"/>
+                <field name="township_code"/>
+                <field name="city"/>
+                <field name="country"/>
+            </calendar>
+        </field>
+    </record>
+
+
+    <record id="township_contact_view_pivot" model="ir.ui.view">
+        <field name="name">township.contact.view.pivot</field>
+        <field name="model">township.contact</field>
+        <field name="arch" type="xml">
+            <pivot string="Township Contacts Pivot">
+                <field name="township_code" type="row"/>
+                <field name="city" type="col"/>
+                <field name="country" type="col"/>
+                <field name="name" type="col" />
+            </pivot>
+        </field>
+    </record>
+
+
+
+    <record id="township_contact_view_kanban" model="ir.ui.view">
+        <field name="name">township.contact.view.kanban</field>
+        <field name="model">township.contact</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record">
+                            <div class="oe_kanban_content">
+                                <div class="oe_kanban_details">
+                                    <strong><field name="name"/></strong>
+                                    <div><field name="township_code"/></div>
+                                    <div><field name="city"/></div>
+                                    <div><field name="country"/></div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+
+        </field>
+    </record>
+
+    <record id="township_contact_action" model="ir.actions.act_window">
+        <field name="name">Township</field>
+        <field name="res_model">township.contact</field>
+        <field name="view_mode" >tree,form,calendar,pivot,kanban</field>
+    </record>
+
+    <menuitem 
+        id="township_contact_menu"
+        name="Township"
+        action="Township.township_contact_action"
+        parent="contacts.menu_localisation"
+        sequence="7"
+    />
+</odoo>

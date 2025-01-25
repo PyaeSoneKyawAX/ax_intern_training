@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="township_contact_view_inherit" model="ir.ui.view">
+        <field name="name">res.partner.view.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group//group//field[@name='city_contact']" position="after">
+                <field name="township_contact" groups='base.group_system' />
+            </xpath>
+        </field>
+    </record>
+    <record id="township_contact_view_tree_inherit" model="ir.ui.view">
+        <field name="name">res.partner.view.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//tree//field[@name='city_contact']" position="after">
+                <field name="township_contact" />
+            </xpath>
+            
+        </field>
+    </record>
+
+</odoo>
