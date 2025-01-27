@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="sale_order_header">
+        <t t-foreach="docs" t-as="o">
+            <div class="header" style="width:100%;font-family: Calibri;">
+                <br/>
+                <div class="row" style="width:100%;padding-bottom:12px;">
+                    <div class="col-md-12" style="width:100%;text-align:right;font-size:12px;margin-top:30px">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="row" style="width:100%;margin-left:500px !important">
+                    <div class="col-md-12" style="width:50%;">
+                        <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 100px;" alt="Logo"/>
+                    </div>
+                </div>
+                <div style="height:40px;"/>
+                <div class="address" style="width:100%;text-align:left;font-size:17px;font-weight:bold;">
+                    <span t-esc="o.company_id.street + ',' if o.company_id.street else ''"/>
+                    <span t-esc="o.company_id.street2 + ',' if o.company_id.street2 else ''"/>
+                    <span t-esc="o.company_id.state_id.name  if o.company_id.state_id.name else ''"/>
+                    <br/>
+                    <strong>Ph:</strong>
+                    <span t-esc="o.company_id.phone"/>
+                </div>
+            </div>
+            <div style="page-break-after: always;"></div>
+        </t>
+    </template>
+
+    <template id="sale_order_footer">
+        <div class="footer o_standard_footer" style="color:black;font-family: Calibri;font-weight:normal;font-size:16px;">
+            <div class="col-md-12" style="width:%;text-align:center;font-size:15px;">
+                <div t-if="report_type == 'pdf'">
+                    <span>Page:</span>
+                    <span class="page"/>
+
+                    /
+                    <span class="topage"/>
+                    <br/>
+                </div>
+            </div>
+            <div style="page-break-after: always;"></div>
+        </div>
+    </template>
+
+    <template id="sale_order_report">
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="first-page" style="font-family : Calibri;">
+                    <div style="text-align:center; font-family : Calibri;">
+                        <h4>Sale Order</h4>
+                    </div>
+                    <div class="row" style="margin-top:20px; padding: 10px;font-weight:bold;">
+                        <div class="col-7">
+                            <div class="row" style="padding: 6px;">
+                                <div class="col-3">
+                                    <strong>Order Date</strong>
+                                </div>
+                                <div class="col-1">:</div>
+                                <div class="col-8">
+                                    <span t-esc="o.date_order.strftime('%d.%m.%Y')"/>
+                                </div>
+                            </div>
+                            <div class="row" style="padding: 6px;">
+                                <div class="col-3">
+                                    <strong>Customer Name</strong>
+                                </div>
+                                <div class="col-1">:</div>
+                                <div class="col-8">
+                                    <span t-esc="o.partner_id.name"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="row" style="padding: 6px;">
+                                <div class="col-4">
+                                    <strong>So No.</strong>
+                                </div>
+                                <div class="col-1">:</div>
+                                <div class="col-7">
+                                    <span t-esc="o.name"/>
+                                </div>
+                            </div>
+                            <div class="row" style="padding: 6px;">
+                                <div class="col-4">
+                                    <strong>Contact</strong>
+                                </div>
+                                <div class="col-1">:</div>
+                                <div class="col-7">
+                                    <t t-set="childs" t-value="o.partner_id.child_ids.filtered(lambda l: l.type=='contact')"/>
+                                    <t t-if="childs">
+                                        <t t-esc="childs[0].name"/>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-if="o.partner_id.child_ids">
+                                            <t t-esc="o.partner_id.child_ids[0].name"/>
+                                        </t>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row" style="padding: 6px;">
+                                <div class="col-4">
+                                    <strong>Phone No.</strong>
+                                </div>
+                                <div class="col-1">:</div>
+                                <div class="col-7">
+                                    <t t-set="childs" t-value="o.partner_id.child_ids.filtered(lambda l: l.type=='contact')"/>
+                                    <t t-if="childs">
+                                        <t t-esc="childs[0].phone"/>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-if="o.partner_id.child_ids">
+                                            <t t-esc="o.partner_id.child_ids[0].phone"/>
+                                        </t>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row" style="padding: 6px;">
+                                <div class="col-4">
+                                    <strong>Sale Person</strong>
+                                </div>
+                                <div class="col-1">:</div>
+                                <div class="col-7">
+                                    <span t-esc="o.user_id.name"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="body" style="width : 100%; margin: 0; margin-top : 20px; font-family : Calibri">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead style="display: table-row-group; font-weight : bold; text-align:center;">
+                            <tr>
+                                <td style="padding: 8px; widtd: 5%; border: 1px solid #000;">No.</td>
+                                <td style="padding: 8px; width: 30%; border: 1px solid #000;">Product name</td>
+                                <td style="padding: 8px; widtd: 8%; border: 1px solid #000;">Qty</td>
+                                <td style="padding: 8px; widtd: 10%; border: 1px solid #000;">Price</td>
+                                <td style="padding: 8px; width: 10%; border: 1px solid #000;">Amount</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="serial_no" t-value="1"/>
+                            <t t-set="total_quantity" t-value="0"/>
+                            <t t-foreach="o.order_line" t-as="line">
+                                <tr>
+                                    <td style="border: 1px solid #000; padding: 8px;text-align:center;">
+                                        <t t-esc="serial_no"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 8px;">
+                                        <t t-esc="line.product_id.name"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align:center;">
+                                        <t t-esc="int(line.product_uom_qty)"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align:right;">
+                                        <t t-esc="o.line.price_unit"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 8px; text-align:right;">
+                                        <t t-esc="o.line.price_subtotal"/>
+                                    </td>
+                                </tr>
+                                <t t-set="serial_no" t-value="serial_no + 1"/>
+                                <t t-set="total_quantity" t-value="total_quantity + line.product_uom_qty"/>
+                            </t>
+                            <tr style="font-weight : bold">
+                                <td colspan="3" style="border: 1px solid #000; padding: 8px; text-align:center;">
+                                    <strong>Total</strong>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 8px; text-align:center;">
+                                    <t t-esc="int(total_quantity)"/>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 8px; text-align:center;">
+
+                                </td>
+                                <td style="border: 1px solid #000; padding: 8px; text-align:center;">
+
+                                </td>
+                                <td style="border: 1px solid #000; padding: 8px; text-align:right;">
+                                    <t t-esc="o.amount_total"/>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 8px; text-align:center;">
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="page-break-after: always;"></div>
+            </t>
+        </t>
+    </template>
+
+
+    <template id="report_sale_order_pdf">
+        <t t-call="web.html_container">
+            <t t-call="ax_base_setup.sale_order_header"/>
+            <t t-call="ax_base_setup.sale_order_footer"/>
+            <t t-call="ax_base_setup.sale_order_report" t-lang="lang"/>
+        </t>
+    </template>
+</odoo>
