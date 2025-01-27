@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_sale_order_report" model="ir.actions.report">
+            <field name="name">Sale Order PDF</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">ax_base_setup.report_sale_order_pdf</field>
+            <field name="report_file">ax_base_setup.report_sale_order_pdf</field>
+            <field name="print_report_name">'Sale Order PDF'</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="paper_format_sale_order_report" model="report.paperformat">
+            <field name="name">A4 SO Customize Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">210</field>
+            <field name="page_width">297</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">30</field>
+            <field name="dpi">90</field>
+            <!-- <field name="report_ids"
+                eval="[(6, 0, [ref('sale_order_pdf.action_sale_order_report')])]"/> -->
+        </record>
+        <record id="action_truck_sale_report" model="ir.actions.report">
+            <field name="name">Truck Sale PDF</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">ax_base_setup.report_truck_sale_pdf</field>
+            <field name="report_file">ax_base_setup.report_truck_sale_pdf</field>
+            <field name="print_report_name">'Truck Sale pdf'</field>
+            <field name="binding_model_id" ref="stock.model_stock_picking"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="paper_format_truck_sale_report" model="report.paperformat">
+            <field name="name">A4 SO Customize Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">210</field>
+            <field name="page_width">297</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">30</field>
+            <field name="dpi">90</field>
+            <!-- <field name="report_ids"
+                eval="[(6, 0, [ref('sale_order_pdf.action_sale_order_report')])]"/> -->
+        </record>
+    </data>
+</odoo>
