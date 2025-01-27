@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_order_view_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.view.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group//group//field[@name='partner_id']" position="after">
+                <field name="truck_sale" />
+            </xpath>
+
+            <xpath expr="//page[@name='operations']//field[@name='move_ids_without_package']//tree" position="inside">
+                <field name="remark_line" string="Remark"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
